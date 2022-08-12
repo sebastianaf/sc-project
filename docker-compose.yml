@@ -1,0 +1,118 @@
+version: "3.8"
+
+services:
+  uv-ppr-api-01:
+    container_name: uv-ppr-api-01
+    image: uv-ppr-api-01
+    restart: always
+    environment:
+      API_PORT: ${API_PORT}
+      API_CLIENT: ${API_CLIENT}
+      API_LOG: ${API_LOG}
+      API_CREATE_ADMIN: ${API_CREATE_ADMIN}
+      API_TOKEN: ${API_TOKEN}
+      API_TOKEN_EXPIRATION_TIME: ${API_TOKEN_EXPIRATION_TIME}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      TZ: ${TZ}
+    build:
+      context: ./api-01
+      dockerfile: Dockerfile
+      args:
+        API_PORT: ${API_PORT}
+#    ports:
+#      - 9010:${API_PORT}
+    depends_on:
+      - uv-ppr-db
+    networks:
+      - uv-ppr
+  
+  uv-ppr-api-02:
+    container_name: uv-ppr-api-02
+    image: uv-ppr-api-02
+    restart: always
+    build:
+      context: ./api-02
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: ${API2_MAX_CPUS}
+          memory: ${API2_MAX_RAM}
+#    ports:
+#      - 9011:5000
+    depends_on:
+      - uv-ppr-db
+    networks:
+      - uv-ppr
+
+  uv-ppr-db:
+    container_name: uv-ppr-db
+    restart: always
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      TZ: ${TZ}
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+#    ports:
+#      - 9020:5432
+    networks:
+      - uv-ppr
+
+  uv-ppr-ui:
+    container_name: uv-ppr-ui
+    image: uv-ppr-ui
+    restart: always
+    environment:
+      REACT_APP_UI_PORT: ${REACT_APP_UI_PORT}
+      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_API2_HOST: ${REACT_APP_API2_HOST}
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_UI_PORT: ${REACT_APP_UI_PORT}
+    depends_on:
+      - uv-ppr-api-01
+      - uv-ppr-api-02
+#    ports:
+#      - 9030:${REACT_APP_UI_PORT}
+    networks:
+      - uv-ppr
+
+  uv-ppr-pgadmin:
+    container_name: uv-ppr-pgadmin
+    restart: always
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASSWORD}
+    depends_on:
+      - uv-ppr-db
+#    ports:
+#      - 9040:80
+    networks:
+      - uv-ppr
+
+  uv-ppr-duckdns:
+    container_name: uv-ppr-duckdns
+    restart: always
+    image: ghcr.io/linuxserver/duckdns
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      SUBDOMAINS: ${SUBDOMAINS}
+      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
+      LOG_FILE: ${LOG_FILE}
+    networks:
+      - uv-ppr
+
+networks:
+  uv-ppr:
+    name: uv-ppr
