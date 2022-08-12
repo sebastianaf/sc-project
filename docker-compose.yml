@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  uv-ppr-api-01:
-    container_name: uv-ppr-api-01
-    image: uv-ppr-api-01
+  uv-sc-api-01:
+    container_name: uv-sc-api-01
+    image: uv-sc-api-01
     restart: always
     environment:
       API_PORT: ${API_PORT}
@@ -25,31 +25,26 @@ services:
 #    ports:
 #      - 9010:${API_PORT}
     depends_on:
-      - uv-ppr-db
+      - uv-sc-db
     networks:
-      - uv-ppr
+      - uv-sc
   
-  uv-ppr-api-02:
-    container_name: uv-ppr-api-02
-    image: uv-ppr-api-02
+  uv-sc-api-02:
+    container_name: uv-sc-api-02
+    image: uv-sc-api-02
     restart: always
     build:
       context: ./api-02
       dockerfile: Dockerfile
-    deploy:
-      resources:
-        limits:
-          cpus: ${API2_MAX_CPUS}
-          memory: ${API2_MAX_RAM}
 #    ports:
 #      - 9011:5000
     depends_on:
-      - uv-ppr-db
+      - uv-sc-db
     networks:
-      - uv-ppr
+      - uv-sc
 
-  uv-ppr-db:
-    container_name: uv-ppr-db
+  uv-sc-db:
+    container_name: uv-sc-db
     restart: always
     image: postgres:latest
     environment:
@@ -62,11 +57,11 @@ services:
 #    ports:
 #      - 9020:5432
     networks:
-      - uv-ppr
+      - uv-sc
 
-  uv-ppr-ui:
-    container_name: uv-ppr-ui
-    image: uv-ppr-ui
+  uv-sc-ui:
+    container_name: uv-sc-ui
+    image: uv-sc-ui
     restart: always
     environment:
       REACT_APP_UI_PORT: ${REACT_APP_UI_PORT}
@@ -78,29 +73,29 @@ services:
       args:
         REACT_APP_UI_PORT: ${REACT_APP_UI_PORT}
     depends_on:
-      - uv-ppr-api-01
-      - uv-ppr-api-02
+      - uv-sc-api-01
+      - uv-sc-api-02
 #    ports:
 #      - 9030:${REACT_APP_UI_PORT}
     networks:
-      - uv-ppr
+      - uv-sc
 
-  uv-ppr-pgadmin:
-    container_name: uv-ppr-pgadmin
+  uv-sc-pgadmin:
+    container_name: uv-sc-pgadmin
     restart: always
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASSWORD}
     depends_on:
-      - uv-ppr-db
+      - uv-sc-db
 #    ports:
 #      - 9040:80
     networks:
-      - uv-ppr
+      - uv-sc
 
-  uv-ppr-duckdns:
-    container_name: uv-ppr-duckdns
+  uv-sc-duckdns:
+    container_name: uv-sc-duckdns
     restart: always
     image: ghcr.io/linuxserver/duckdns
     environment:
@@ -111,8 +106,8 @@ services:
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
       LOG_FILE: ${LOG_FILE}
     networks:
-      - uv-ppr
+      - uv-sc
 
 networks:
-  uv-ppr:
-    name: uv-ppr
+  uv-sc:
+    name: uv-sc
