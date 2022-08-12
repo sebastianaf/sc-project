@@ -3,7 +3,6 @@ COPY ["app.py","/usr/uv/app/"]
 WORKDIR /usr/uv/app/
 RUN python -m pip install flask && \
     python -m pip install -U flask-cors && \
-    python -m pip install simulateQueue && \
 	python -m pip install simpy && \
     python -m pip install csv && \
     python -m pip install statistics && \
