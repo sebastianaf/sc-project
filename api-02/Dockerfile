@@ -4,10 +4,7 @@ WORKDIR /usr/uv/app/
 RUN python -m pip install flask && \
     python -m pip install -U flask-cors && \
 	python -m pip install simpy && \
-    python -m pip install csv && \
-    python -m pip install statistics && \
     python -m pip install numpy && \
-    python -m pip install datetime && \
 
 COPY [".","/usr/uv/app/"]
 EXPOSE 5000
