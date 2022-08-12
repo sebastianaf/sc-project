@@ -1,0 +1,31 @@
+{
+  "main": "index.js",
+  "scripts": {
+    "build": "npx babel src -d dist",
+    "start": "npx nodemon --exec npx \"babel-node\" src/index.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "directory-tree": "^3.3.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "helmet": "^4.6.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.0",
+    "string": "^3.3.3"
+  }
+}
