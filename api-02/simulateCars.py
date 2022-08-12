@@ -112,7 +112,7 @@ def preExecuteCars(city,cars,clients,seed):
     while numpy.mean(ESPERA_CLIENTES)> 0 or iteracion0:
         ESPERA_CLIENTES = numpy.array([])
         iteracion0 = False
-        capacity = cars + 1
+        cars = cars + 1
         
         #Inicio de la simulación
         printValue('--------------- Resultados de simulación ---------------')
@@ -120,10 +120,10 @@ def preExecuteCars(city,cars,clients,seed):
         env = simpy.Environment()
 
         #Inicio del proceso y ejecución
-        servidor = simpy.Resource(env, capacity)
+        servidor = simpy.Resource(env, cars)
         env.process(llegada(env, clients, servidor))
         env.run()
-    return capacity
+    return cars
 
 def printValue(value):
     #print(value)
@@ -140,4 +140,4 @@ def executeCars(city,clients,seed):
     printValue(f"Tiempo de atencion promedio: {mean(duraciones):.2f}")
     return text
 
-print(executeCars("uio_clean.csv",1,40))
+print(executeCars('bog_clean.csv',100,40))
