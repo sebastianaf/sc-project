@@ -7,6 +7,6 @@ RUN python -m pip install flask && \
     python -m pip install numpy
 
 COPY [".","/usr/uv/app/"]
-EXPOSE 5000
+EXPOSE 5002
 CMD ["app.py"]
 ENTRYPOINT ["python"]
