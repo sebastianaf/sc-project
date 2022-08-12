@@ -1,4 +1,4 @@
-# ppr-project
+# sc-project
 This code project is a final project to Computing Simulation of Universidad del Valle.
 
 This repo contains all about the project.
