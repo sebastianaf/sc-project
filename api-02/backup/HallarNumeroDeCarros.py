@@ -14,7 +14,7 @@ columns = defaultdict(list) # each value in each column is appended to a list
 mex = 'mex_clean.csv'
 bogota ='bog_clean.csv'
 quito = 'uio_clean.csv'
-with open(quito) as f:
+with open(bogota) as f:
     reader = csv.DictReader(f) # read rows into a dictionary format
     for row in reader: # read a row as {column1: value1, column2: value2,...}
         contador = 0
@@ -65,7 +65,7 @@ for x in range (len(tiemposDeLLegado)):
 
 #Datos de la simulación
 SEMILLA = 40 #Semilla generador
-CLIENTES = 2500 #Vamos a simular 10 clientes
+CLIENTES = 100 #Vamos a simular 10 clientes
 #Variables desempeño
 COLA = 0
 MAX_COLA = 0

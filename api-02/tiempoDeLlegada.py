@@ -14,7 +14,8 @@ from datetime import datetime
 columns = defaultdict(list) # each value in each column is appended to a list
 bogota ='bog_clean.csv'
 quito = 'uio_clean.csv'
-with open(quito) as f:
+mexico = 'mex_clean.csv'
+with open(bogota) as f:
     reader = csv.DictReader(f) # read rows into a dictionary format
     for row in reader: # read a row as {column1: value1, column2: value2,...}
         for (k,v) in row.items(): # go over each column name and value 
@@ -53,3 +54,4 @@ def clasificar(duraciones):
   return fo 
 print(mean(deltaTime))
 plt.plot(clasificar(deltaTime))
+plt.show()

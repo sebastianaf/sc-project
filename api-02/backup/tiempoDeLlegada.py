@@ -36,6 +36,9 @@ for x in range (len(tiemposDeLLegado)):
     if(d1.day==d2.day and (d1.month==12 and d2.month==12) and d1.year==d2.year ):
         deltaTime.append(delta.seconds)
     
+frecuenciasEsperadas = []
+for i in range (len(deltaTime)):
+    frecuenciasEsperadas.append(random.expovariate(1/mean(deltaTime)))
 
 
 def clasificar(duraciones):
@@ -53,3 +56,5 @@ def clasificar(duraciones):
   return fo 
 print(mean(deltaTime))
 plt.plot(clasificar(deltaTime))
+plt.plot(clasificar(frecuenciasEsperadas))
+plt.show()

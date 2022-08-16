@@ -120,4 +120,4 @@ def executeQueue(city,cars,clients,seed):
     printValue(f"Tiempo promedio de espera {numpy.mean(ESPERA_CLIENTES):.2f}")
     return text
 
-#print(executeQueue("uio_clean.csv",1,20,40))
+print(executeQueue("uio_clean.csv",4,100,40))
